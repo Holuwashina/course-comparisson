@@ -5,8 +5,9 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import Link from "next/link";
 
-export function CourseCard({ title, type, description }) {
+export function CourseCard({ id, title, type, description }) {
   return (
     <Card className="mt-6 w-96 rounded-none">
       <CardBody>
@@ -19,7 +20,7 @@ export function CourseCard({ title, type, description }) {
         <p className="line-clamp-4">{description}</p>
       </CardBody>
       <CardFooter className="pt-0">
-        <Button>Overview</Button>
+        <Link href={`course/${id}`}>Overview</Link>
       </CardFooter>
     </Card>
   );

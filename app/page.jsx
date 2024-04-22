@@ -14,18 +14,21 @@ import { CourseCard } from "./components/CourseCard.jsx";
 
 const courses = [
   {
+    id: "bhkjkdwcjklcke",
     title: "Computer Science",
     type: "Under Graduate",
     description:
       "Computer Science is the study of algorithms, computation, and programming. It covers a broad range of topics, including software development, data structures, algorithms, artificial intelligence, and computer systems. Students learn to design and analyze algorithms, develop software applications, and solve complex computational problems.",
   },
   {
+    id: "bhkjkdwcjklckejkjkd",
     title: "Cyber Security",
     type: "Under Graduate",
     description:
       "Information Technology focuses on managing and utilizing technology to solve business problems and improve efficiency. IT professionals design, implement, and maintain IT systems, networks, and databases. Coursework includes topics such as IT infrastructure management, cybersecurity, cloud computing, project management, and database administration.",
   },
   {
+    id: "xjhskkdwcjklcke",
     title: "Information Technology",
     type: "Under Graduate",
     description:
