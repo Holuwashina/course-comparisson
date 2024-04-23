@@ -24,6 +24,7 @@ model Course {
   id            String      @id @unique @default(uuid())
   institutionId String      @map("institution_id") @db.VarChar(255)
   name          String      @map("name") @db.VarChar(255)
+  overview      Json        @map("overview") @db.Json
   code          String      @unique @map("code") @db.VarChar(20)
   type          String      @map("type") @db.VarChar(20)
   duration      String      @map("duration") @db.VarChar(255)
