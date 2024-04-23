@@ -25,7 +25,7 @@ export default function Footer() {
       <div className="mx-auto w-full max-w-7xl px-8">
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
           <div>
-            <Image src="logo.svg" width={200} height={150} />
+            <Image src="/logo.svg" width={200} height={150} />
             <Typography variant="h5" className="pl-8 pt-2">
             Design Your Success
             </Typography>

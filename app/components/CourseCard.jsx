@@ -20,7 +20,7 @@ export function CourseCard({ id, title, type, description }) {
         <p className="line-clamp-4">{description}</p>
       </CardBody>
       <CardFooter className="pt-0">
-        <Link href={`course/${id}`}>Overview</Link>
+        <Link href={`course/${id}`} className="text-xs text-red-600 font-bold">Overview</Link>
       </CardFooter>
     </Card>
   );
