@@ -127,7 +127,7 @@ export default function Page({ params }) {
   );
 }
 
-export function TabsComponent() {
+function TabsComponent() {
   const [activeTab, setActiveTab] = React.useState("overview");
   const data = [
     {
