@@ -133,73 +133,7 @@ export function TabsComponent() {
     {
       label: "Overview",
       value: "overview",
-      desc: `
-      # Computer Science Course Overview
-
-Welcome to the Computer Science course! This comprehensive program is designed to introduce fundamental concepts and skills in the exciting field of computer science.
-
-## Course Objectives
-
-- **Understanding Core Concepts:** Gain a solid understanding of key concepts in computer science, including algorithms, data structures, and software engineering principles.
-
-- **Programming Proficiency:** Develop proficiency in programming languages such as Python, Java, and JavaScript, with a focus on problem-solving and software development.
-
-- **System Design and Analysis:** Learn about system design, analysis of algorithms, and computational thinking to solve complex problems efficiently.
-
-- **Database Management:** Explore database systems, SQL, and NoSQL databases for effective data storage and retrieval.
-
-- **Web Development:** Acquire skills in web development technologies like HTML/CSS, React.js, and Node.js to build interactive web applications.
-
-- **Cybersecurity Awareness:** Understand cybersecurity fundamentals, including threats, vulnerabilities, and best practices for secure computing.
-
-## Course Structure
-
-### Modules:
-
-1. **Introduction to Computer Science**
-   - Overview of computer science history and evolution.
-   - Introduction to programming concepts and problem-solving techniques.
-
-2. **Data Structures and Algorithms**
-   - Study of fundamental data structures such as arrays, linked lists, trees, and graphs.
-   - Algorithm design and analysis techniques.
-
-3. **Software Engineering**
-   - Principles of software development, version control, and testing.
-
-4. **Database Systems**
-   - Introduction to relational databases, SQL queries, and database design.
-
-5. **Web Development**
-   - Frontend and backend development using modern web technologies.
-
-6. **Cybersecurity Basics**
-   - Overview of cybersecurity threats and countermeasures.
-
-### Learning Approach:
-
-- **Lectures and Workshops:** Engage in interactive lectures and hands-on workshops to reinforce theoretical concepts with practical applications.
-
-- **Projects and Assignments:** Complete programming assignments and projects to demonstrate understanding and apply skills learned throughout the course.
-
-- **Guest Speakers and Industry Insights:** Benefit from guest lectures by industry professionals and gain insights into real-world applications of computer science.
-
-## Target Audience
-
-This course is suitable for:
-
-- Students pursuing a career in computer science or related fields.
-- Professionals looking to enhance their programming and problem-solving skills.
-- Individuals interested in understanding the foundational principles of computing.
-
-## Prerequisites
-
-No prior programming experience is required. Basic knowledge of computer usage and familiarity with mathematical concepts is recommended.
-
----
-
-Join us in this exciting journey through the world of Computer Science and unlock your potential in the digital era!
- `,
+      desc: ''
     },
     {
       label: "Entry Requirement",
@@ -249,7 +183,7 @@ Join us in this exciting journey through the world of Computer Science and unloc
             value={value}
             onClick={() => setActiveTab(value)}
             className={`${
-              activeTab === value ? "text-gray-900" : ""
+              activeTab === value ? "text-red-600" : ""
             } text-xs uppercase font-extrabold`}
           >
             {label}

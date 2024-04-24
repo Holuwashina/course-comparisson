@@ -12,6 +12,7 @@ CREATE TABLE "Course" (
     "id" TEXT NOT NULL,
     "institution_id" VARCHAR(255) NOT NULL,
     "name" VARCHAR(255) NOT NULL,
+    "description" TEXT,
     "image_url" VARCHAR(255) NOT NULL,
     "code" VARCHAR(20) NOT NULL,
     "type" VARCHAR(20) NOT NULL,
