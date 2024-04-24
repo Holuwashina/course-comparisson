@@ -7,12 +7,12 @@ import {
 } from "@material-tailwind/react";
 import Link from "next/link";
 
-export function CourseCard({ id, title, type, description }) {
+export function CourseCard({ id, name, type, description }) {
   return (
     <Card className="mt-6 w-96 rounded-none">
       <CardBody>
         <Typography variant="h5" color="blue-gray" className="uppercase">
-          {title}
+          {name}
         </Typography>
         <Typography variant="small" color="red" className="mb-2 text-[0.6rem]">
           {type}

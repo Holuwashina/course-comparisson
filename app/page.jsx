@@ -11,32 +11,50 @@ import {
 import Main from "./components/Main.jsx";
 import Image from "next/image.js";
 import { CourseCard } from "./components/CourseCard.jsx";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const courses = [
-  {
-    id: "bhkjkdwcjklcke",
-    title: "Computer Science",
-    type: "Under Graduate",
-    description:
-      "Computer Science is the study of algorithms, computation, and programming. It covers a broad range of topics, including software development, data structures, algorithms, artificial intelligence, and computer systems. Students learn to design and analyze algorithms, develop software applications, and solve complex computational problems.",
-  },
-  {
-    id: "bhkjkdwcjklckejkjkd",
-    title: "Cyber Security",
-    type: "Under Graduate",
-    description:
-      "Information Technology focuses on managing and utilizing technology to solve business problems and improve efficiency. IT professionals design, implement, and maintain IT systems, networks, and databases. Coursework includes topics such as IT infrastructure management, cybersecurity, cloud computing, project management, and database administration.",
-  },
-  {
-    id: "xjhskkdwcjklcke",
-    title: "Information Technology",
-    type: "Under Graduate",
-    description:
-      "Cyber Security is dedicated to protecting digital systems, networks, and data from unauthorized access, attacks, and threats. Students learn about network security, cryptography, ethical hacking, incident response, and compliance. Cyber Security professionals play a critical role in safeguarding sensitive information and ensuring the integrity and confidentiality of digital assets.",
-  },
-];
+// const courses = [
+//   {
+//     id: "bhkjkdwcjklcke",
+//     name: "Computer Science",
+//     type: "Under Graduate",
+//     description:
+//       "Computer Science is the study of algorithms, computation, and programming. It covers a broad range of topics, including software development, data structures, algorithms, artificial intelligence, and computer systems. Students learn to design and analyze algorithms, develop software applications, and solve complex computational problems.",
+//   },
+//   {
+//     id: "bhkjkdwcjklckejkjkd",
+//     name: "Cyber Security",
+//     type: "Under Graduate",
+//     description:
+//       "Information Technology focuses on managing and utilizing technology to solve business problems and improve efficiency. IT professionals design, implement, and maintain IT systems, networks, and databases. Coursework includes topics such as IT infrastructure management, cybersecurity, cloud computing, project management, and database administration.",
+//   },
+//   {
+//     id: "xjhskkdwcjklcke",
+//     name: "Information Technology",
+//     type: "Under Graduate",
+//     description:
+//       "Cyber Security is dedicated to protecting digital systems, networks, and data from unauthorized access, attacks, and threats. Students learn about network security, cryptography, ethical hacking, incident response, and compliance. Cyber Security professionals play a critical role in safeguarding sensitive information and ensuring the integrity and confidentiality of digital assets.",
+//   },
+// ];
 
 export default function Home() {
+
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get('/api/courses');
+        setCourses(response.data);
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
   return (
     <main>
       <Header />
@@ -103,7 +121,7 @@ export default function Home() {
         <section className="px-4 py-2 lg:px-44 lg:py-4">
           <Typography
             variant="h6"
-            className="font-extrabold p-2 border-l border-l-4 border-red-900 border-b uppercase"
+            className="font-extrabold p-2 border-l-4 border-red-900 border-b uppercase"
           >
             Top Courses
           </Typography>

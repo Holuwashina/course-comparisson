@@ -1,28 +1,67 @@
 "use client";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
-import { Typography } from "@material-tailwind/react";
-import Image from "next/image";
+import { Spinner, Typography } from "@material-tailwind/react";
+import React, { useEffect, useState } from "react";
+import {
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
+} from "@material-tailwind/react";
+import axios from "axios";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function Page({ params }) {
   const { id } = params;
+
+  const [course, setCourse] = useState(null);
+
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        const response = await axios.get(`/api/courses/${id}`);
+        setCourse(response.data);
+      } catch (error) {
+        console.error("Error fetching course:", error);
+      }
+    };
+
+    if (id) {
+      fetchCourse();
+    }
+  }, [id]);
+
+  if (!course || !course.imageUrl) {
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <>
       <Header />
       {/* Hero Section */}
       <div className="grid grid-cols-2">
         <div className="flex justify-center">
-          <div className="flex flex-col justify-between relative left-32 bg-white rounded-3xl py-10 pr-12 my-10">
+          <div className="flex flex-col justify-between relative left-32 bg-white rounded-3xl py-10 pr-20 my-10">
             <div>
-              <Typography variant="h1" className="font-extrabold">
-                COMPUTER <span className="text-red-600">SCIENCE</span>
+              <Typography variant="h1" className="font-extrabold uppercase">
+                {course.name.split(" ")[0]}{" "}
+                <span className="text-red-600 uppercase">
+                  {course.name.split(" ")[1]}
+                </span>
               </Typography>
               <Typography
                 variant="small"
                 color="red"
-                className="mb-2 text-[0.6rem] rounded-full border border-red-500 w-28 py-1 px-2"
+                className="mb-2 text-[0.6rem] rounded-full border border-red-500 w-28 py-1 px-2 uppercase"
               >
-                UNDER GRADUATE
+                {course.type}
               </Typography>
             </div>
             <div>
@@ -43,7 +82,7 @@ export default function Page({ params }) {
                   color="red"
                   className="px-2 text-[0.7rem] font-medium"
                 >
-                  Melbourne (Bundoora)
+                  {course.institution.location}
                 </Typography>
               </div>
 
@@ -64,7 +103,7 @@ export default function Page({ params }) {
                   color="red"
                   className="px-2 font-medium"
                 >
-                  3 years full-time or part-time equivalent
+                  {course.duration}
                 </Typography>
               </div>
             </div>
@@ -72,7 +111,7 @@ export default function Page({ params }) {
         </div>
         <div>
           <img
-            src="https://www.latrobe.edu.au/courses/images/B-Computer-Science-LTU_ME_36879_1440.jpg"
+            src={`${course.imageUrl}`}
             alt="Background Image"
             layout="fill"
             objectFit="cover"
@@ -88,31 +127,86 @@ export default function Page({ params }) {
   );
 }
 
-import React from "react";
-import {
-  Tabs,
-  TabsHeader,
-  TabsBody,
-  Tab,
-  TabPanel,
-} from "@material-tailwind/react";
-
 export function TabsComponent() {
-  const [activeTab, setActiveTab] = React.useState("html");
+  const [activeTab, setActiveTab] = React.useState("overview");
   const data = [
     {
       label: "Overview",
-      value: "html",
-      desc: `It really matters and then like it really doesn't matter.
-      What matters is the people who are sparked by it. And the people 
-      who are like offended by it, it doesn't matter.`,
+      value: "overview",
+      desc: `
+      # Computer Science Course Overview
+
+Welcome to the Computer Science course! This comprehensive program is designed to introduce fundamental concepts and skills in the exciting field of computer science.
+
+## Course Objectives
+
+- **Understanding Core Concepts:** Gain a solid understanding of key concepts in computer science, including algorithms, data structures, and software engineering principles.
+
+- **Programming Proficiency:** Develop proficiency in programming languages such as Python, Java, and JavaScript, with a focus on problem-solving and software development.
+
+- **System Design and Analysis:** Learn about system design, analysis of algorithms, and computational thinking to solve complex problems efficiently.
+
+- **Database Management:** Explore database systems, SQL, and NoSQL databases for effective data storage and retrieval.
+
+- **Web Development:** Acquire skills in web development technologies like HTML/CSS, React.js, and Node.js to build interactive web applications.
+
+- **Cybersecurity Awareness:** Understand cybersecurity fundamentals, including threats, vulnerabilities, and best practices for secure computing.
+
+## Course Structure
+
+### Modules:
+
+1. **Introduction to Computer Science**
+   - Overview of computer science history and evolution.
+   - Introduction to programming concepts and problem-solving techniques.
+
+2. **Data Structures and Algorithms**
+   - Study of fundamental data structures such as arrays, linked lists, trees, and graphs.
+   - Algorithm design and analysis techniques.
+
+3. **Software Engineering**
+   - Principles of software development, version control, and testing.
+
+4. **Database Systems**
+   - Introduction to relational databases, SQL queries, and database design.
+
+5. **Web Development**
+   - Frontend and backend development using modern web technologies.
+
+6. **Cybersecurity Basics**
+   - Overview of cybersecurity threats and countermeasures.
+
+### Learning Approach:
+
+- **Lectures and Workshops:** Engage in interactive lectures and hands-on workshops to reinforce theoretical concepts with practical applications.
+
+- **Projects and Assignments:** Complete programming assignments and projects to demonstrate understanding and apply skills learned throughout the course.
+
+- **Guest Speakers and Industry Insights:** Benefit from guest lectures by industry professionals and gain insights into real-world applications of computer science.
+
+## Target Audience
+
+This course is suitable for:
+
+- Students pursuing a career in computer science or related fields.
+- Professionals looking to enhance their programming and problem-solving skills.
+- Individuals interested in understanding the foundational principles of computing.
+
+## Prerequisites
+
+No prior programming experience is required. Basic knowledge of computer usage and familiarity with mathematical concepts is recommended.
+
+---
+
+Join us in this exciting journey through the world of Computer Science and unlock your potential in the digital era!
+ `,
     },
     {
-        label: "Entry Requirement",
-        value: "angular",
-        desc: `Because it's about motivating the doers. Because I'm here
+      label: "Entry Requirement",
+      value: "angular",
+      desc: `Because it's about motivating the doers. Because I'm here
         to follow my dreams and inspire other people to follow their dreams, too.`,
-      },
+    },
     {
       label: "What you'll study",
       value: "react",
@@ -154,7 +248,9 @@ export function TabsComponent() {
             key={value}
             value={value}
             onClick={() => setActiveTab(value)}
-            className={`${activeTab === value ? "text-gray-900" : ""} text-xs uppercase font-extrabold`}
+            className={`${
+              activeTab === value ? "text-gray-900" : ""
+            } text-xs uppercase font-extrabold`}
           >
             {label}
           </Tab>
@@ -163,7 +259,7 @@ export function TabsComponent() {
       <TabsBody>
         {data.map(({ value, desc }) => (
           <TabPanel key={value} value={value}>
-            {desc}
+              <Markdown className="prose prose-slate max-w-none" remarkPlugins={[remarkGfm]}>{desc}</Markdown>
           </TabPanel>
         ))}
       </TabsBody>
