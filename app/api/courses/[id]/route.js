@@ -1,3 +1,5 @@
+import prisma from "../../../../prisma/prisma";
+
 export async function GET(request, { params }) {
   const id = params.id;
 
@@ -8,7 +10,19 @@ export async function GET(request, { params }) {
       },
       include: {
         institution: true,
-        subjects: true,
+        CoreSubject: true,
+        MajorCourse: true,
+        CourseDetail: {
+          select: {
+            index: true,
+            label: true,
+            value: true,
+            content: true,
+          },
+          orderBy: {
+            index: "asc",
+          },
+        },
       },
     });
 
