@@ -26,10 +26,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
           <div>
             <Image src="/logo.svg" width={200} height={150} />
-            <Typography variant="h5" className="pl-8 pt-2">
+            <Typography variant="h5" className="pt-2">
             Design Your Success
             </Typography>
-            <Typography variant="h6" className="pl-8 pt-2 mb-6 w-[400px] text-gray-800">
+            <Typography variant="h6" className="pt-2 mb-6 w-[400px] text-gray-800">
            Compare Courses, Transform Your Future!
             </Typography>
           </div>

@@ -18,6 +18,7 @@ export async function GET(request, { params }) {
             label: true,
             value: true,
             content: true,
+            more: true
           },
           orderBy: {
             index: "asc",

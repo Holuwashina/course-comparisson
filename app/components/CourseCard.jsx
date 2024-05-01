@@ -11,16 +11,16 @@ export function CourseCard({ id, name, type, description }) {
   return (
     <Card className="mt-6 w-96 rounded-none">
       <CardBody>
-        <Typography variant="h5" color="blue-gray" className="uppercase">
+        <Typography variant="h5" color="blue-gray" className="uppercase font-extrabold tracking-wider">
           {name}
         </Typography>
-        <Typography variant="small" color="red" className="mb-2 text-[0.6rem]">
+        <Typography variant="small" color="red" className="mb-2 text-[0.7rem] tracking-wider">
           {type}
         </Typography>
         <p className="line-clamp-4">{description}</p>
       </CardBody>
       <CardFooter className="pt-0">
-        <Link href={`course/${id}`} className="text-xs text-red-600 font-bold">Overview</Link>
+        <Link href={`course/${id}`} className="text-xs text-red-600 font-bold uppercase">Overview</Link>
       </CardFooter>
     </Card>
   );

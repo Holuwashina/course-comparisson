@@ -2,7 +2,7 @@
 import React from "react";
 import {
   Navbar,
-  MobileNav,
+  Collapse,
   Typography,
   Button,
   IconButton,
@@ -198,7 +198,7 @@ export default function Header() {
           )}
         </IconButton>
       </div>
-      <MobileNav open={openNav}>
+      <Collapse open={openNav}>
         <div className="container mx-auto">
           {navList}
           <div className="flex flex-col gap-x-2 sm:flex-row sm:items-center">
@@ -241,7 +241,7 @@ export default function Header() {
             </Button>
           </div>
         </div>
-      </MobileNav>
+      </Collapse>
     </Navbar>
   );
 }

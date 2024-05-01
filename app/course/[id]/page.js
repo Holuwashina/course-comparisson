@@ -1,7 +1,7 @@
 "use client";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
-import { Spinner, Typography } from "@material-tailwind/react";
+import { Alert, Spinner, Typography } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import {
   Tabs,
@@ -53,14 +53,14 @@ export default function Page({ params }) {
             <div>
               <Typography variant="h1" className="font-extrabold uppercase">
                 {course.name.split(" ")[0]}{" "}
-                <span className="text-red-600 uppercase">
+                <span className="text-red-900 uppercase">
                   {course.name.split(" ")[1]}
                 </span>
               </Typography>
               <Typography
                 variant="small"
                 color="red"
-                className="mb-2 text-[0.6rem] rounded-full border border-red-500 w-28 py-1 px-2 uppercase"
+                className="mb-2 text-[0.6rem] rounded-full border border-red-900 w-28 py-1 px-2 uppercase"
               >
                 {course.type}
               </Typography>
@@ -72,11 +72,12 @@ export default function Page({ params }) {
               <hr className="mb-2" />
               <div className="flex flex-wrap">
                 {course?.MajorCourse?.length > 0 &&
-                  course?.MajorCourse.map(({name, link}) => (
+                  course?.MajorCourse.map(({ name, link }) => (
                     <Typography
+                      key={name}
                       variant="small"
                       color="red"
-                      className="mb-2 mx-2 text-[0.6rem] rounded-full border border-red-500 py-1 px-2 uppercase"
+                      className="mb-2 mx-2 text-[0.6rem] rounded-full border border-red-900 py-1 px-2 uppercase"
                     >
                       <a href={link}>{name}</a>
                     </Typography>
@@ -129,12 +130,7 @@ export default function Page({ params }) {
           </div>
         </div>
         <div>
-          <img
-            src={`${course.imageUrl}`}
-            alt="Background Image"
-            layout="fill"
-            objectFit="cover"
-          />
+          <img src={`${course.imageUrl}`} alt="Background Image" />
         </div>
       </div>
       {/* Tabs Section */}
@@ -164,7 +160,7 @@ function TabsComponent({ course }) {
             value={value}
             onClick={() => setActiveTab(value)}
             className={`${
-              activeTab === value ? "text-red-600" : ""
+              activeTab === value ? "text-red-900" : ""
             } text-xs uppercase font-extrabold`}
           >
             {label}
@@ -172,12 +168,24 @@ function TabsComponent({ course }) {
         ))}
       </TabsHeader>
       <TabsBody>
-        {data.map(({ value, content }) => (
+        {data.map(({ value, content, more }) => (
           <TabPanel className="min-h-screen" key={value} value={value}>
+            <Alert className="rounded-none border-l-4 border-red-900 bg-red-900/10 font-extrabold tracking-wider text-red-400 uppercase">
+              {activeTab == "overview" && "Overview"}
+              {activeTab == "entry requirement" && "Entry requirement"}
+              {activeTab == "subjects" && "What you'll study"}
+              {activeTab == "career outcomes" && "career outcomes"}
+            </Alert>
+
             <div
-              className="prose prose-headings:uppercase prose-headings:max-w-md prose-headings:font-extrabold prose-a:text-red-600 max-w-none"
+              className="prose prose-headings:uppercase prose-headings:max-w-md prose-headings:font-extrabold prose-a:text-red-900 max-w-none"
               dangerouslySetInnerHTML={{ __html: content }}
             />
+            <div
+              className="prose prose-headings:uppercase prose-headings:max-w-md prose-headings:font-extrabold prose-a:text-red-900 max-w-none"
+              dangerouslySetInnerHTML={{ __html: more }}
+            />
+
             {activeTab == "subjects"
               ? course?.CoreSubject?.length > 0 && (
                   <>
@@ -212,11 +220,11 @@ function TabsComponent({ course }) {
                       </Typography>
                       <hr />
                       <p>
-                        A major is a sequence of related subjects studied in
+                        {`A major is a sequence of related subjects studied in
                         your course. To attain a major, this sequence must add
                         up to 120 credit points. In some courses, you need to
                         complete at least one major from your course's
-                        discipline to attain your degree.
+                        discipline to attain your degree.`}
                       </p>
                     </div>
                     <_TableWithStripedRows data={course?.MajorCourse} />
@@ -237,15 +245,15 @@ function TabsComponent({ course }) {
                       </Typography>
                       <hr />
                       <p>
-                        A range of standalone elective subjects is available in
+                        {`A range of standalone elective subjects is available in
                         this course. Some electives are recommended for your
                         course, but you may also be able to choose from a range
                         of University-wide electives or electives from other
                         interest areas or disciplines. Note these electives may
                         have their own prerequisites and other requirements.
-                        Please refer to the{" "}
+                        Please refer to the`}
                         <a
-                          className="text-red-600"
+                          className="text-red-900"
                           href="https://handbook.latrobe.edu.au/courses/2024/SBCS"
                         >
                           La Trobe University Handbook
@@ -294,7 +302,7 @@ function TableWithStripedRows({ data }) {
                 <a
                   href={link}
                   color="blue-gray"
-                  className="text-red-600 text-xs"
+                  className="text-red-900 text-xs"
                 >
                   {name}
                 </a>
@@ -364,7 +372,7 @@ function _TableWithStripedRows({ data }) {
           {data.map(({ name, code, link }, index) => (
             <tr key={name} className="even:bg-blue-gray-50/50">
               <td className="p-4">
-                <a href={link} color="blue-gray" className="text-red-600">
+                <a href={link} color="blue-gray" className="text-red-900">
                   {name}
                 </a>
               </td>
