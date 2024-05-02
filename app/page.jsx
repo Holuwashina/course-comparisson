@@ -78,7 +78,7 @@ export default function Home() {
                   La Trobe University
                 </h1>
                 <h1 className="text-2xl font-extrabold z-10 uppercase tracking-wider">
-                  Course Comparisson Tool
+                  Course Comparison Tool
                 </h1>
                 <p className="py-2 z-10">Discover Your Path with Confidence</p>
               </div>

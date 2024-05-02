@@ -101,7 +101,7 @@ export default function Home() {
                 La Trobe University
               </h1>
               <h1 className="text-2xl font-extrabold z-10 uppercase tracking-wider">
-                Course Comparisson Tool
+                Course Comparison Tool
               </h1>
               <p className="py-2 z-10">Discover Your Path with Confidence</p>
             </div>
@@ -237,8 +237,6 @@ export default function Home() {
                     __html: courses?.course1?.CourseDetail[0]?.content,
                   }}
                 />
-
-                
               </div>
               <div>
                 <Card className="mt-6 shadow-none border rounded-none border-red-600 mb-4">
@@ -314,7 +312,7 @@ export default function Home() {
               </div>
               <div>
                 <Alert className="rounded-none border-l-4 border-red-600 bg-red-600/10 font-extrabold tracking-wider text-red-400 uppercase">
-                 {` What you'll learn`}
+                  {` What you'll learn`}
                 </Alert>
                 <div
                   className="prose prose-headings:uppercase prose-headings:max-w-md prose-headings:font-extrabold prose-a:text-red-600 max-w-none"
@@ -423,4 +421,3 @@ export function DropDown({ subjects }) {
     </div>
   );
 }
-
