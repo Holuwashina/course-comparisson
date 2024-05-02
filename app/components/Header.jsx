@@ -85,7 +85,7 @@ export default function Header() {
             fill="#90A4AE"
           />
         </svg>
-        <Link href="/compare" className="flex items-center">
+        <Link href="/ranking" className="flex items-center">
           Ranking
         </Link>
       </Typography>
