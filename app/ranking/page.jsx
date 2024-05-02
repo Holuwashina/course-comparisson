@@ -236,22 +236,7 @@ const CourseVisualizations = () => {
           <h2 className="font-bold uppercase">Course Costs</h2>
           <Bar data={costData} />
         </div>
-        <table className="prose">
-          <thead>
-            <tr className="text-left">
-              <th>Course Name</th>
-              <th>Cost</th>
-            </tr>
-          </thead>
-          <tbody>
-            {courseData.map((course, index) => (
-              <tr key={index}>
-                <td>{course.name}</td>
-                <td>${course.cost}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        
       </div>
       <hr className="py-4" />
       <div className="grid grid-cols-2 justify-center gap-4">
