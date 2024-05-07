@@ -10,6 +10,7 @@ import {
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { Rating } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const features = [
   {
@@ -47,6 +48,8 @@ export default function Review() {
 
     fetchCourses();
   }, []);
+
+  console.log(courses);
 
   return (
     <>

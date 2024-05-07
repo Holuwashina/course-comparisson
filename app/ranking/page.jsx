@@ -2,7 +2,6 @@
 import Header from "../components/Header";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
-import Chart from "chart.js/auto";
 import { Bar, Line, Radar, Doughnut, PolarArea } from "react-chartjs-2";
 import { Children, useEffect, useState } from "react";
 import axios from "axios";
@@ -23,6 +22,8 @@ export default function Ranking() {
     fetchCourses();
   }, []);
 
+  if (ranking.length === 0) return;
+
   const courseData = ranking?.map((rank) => {
     return {
       name: rank?.course?.name,
@@ -34,7 +35,6 @@ export default function Ranking() {
     };
   });
 
-
   // Extract data for visualization
   const courseNames = courseData.map((course) => course.name.toUpperCase());
   const courseCosts = courseData.map((course) => course.cost);
@@ -42,9 +42,7 @@ export default function Ranking() {
   const employmentOutcomes = courseData.map(
     (course) => course.employmentOutcomes
   );
-  const courseDuration = courseData.map(
-    (course) => course.courseDuration
-  );
+  const courseDuration = courseData.map((course) => course.courseDuration);
 
   const costData = {
     labels: courseNames,
@@ -133,7 +131,6 @@ export default function Ranking() {
     </>
   );
 }
-
 
 function SalaryComponent({ ranking }) {
   return (
