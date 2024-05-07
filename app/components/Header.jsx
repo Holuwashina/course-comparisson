@@ -109,7 +109,7 @@ export default function Header() {
             fill="#90A4AE"
           />
         </svg>
-        <Link href="/compare" className="flex items-center">
+        <Link href="/review" className="flex items-center">
           Write Review
         </Link>
       </Typography>

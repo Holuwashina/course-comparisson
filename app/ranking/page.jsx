@@ -3,161 +3,49 @@ import Header from "../components/Header";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
 import Chart from "chart.js/auto";
-import { Bar, Radar, Pie } from "react-chartjs-2";
-import { useState } from "react";
-
-const dummyCourseData = [
-  { name: "Computer Science", cost: 20000 },
-  { name: "Cybersecurity", cost: 22000 },
-  { name: "Information Technology", cost: 18000 },
-  { name: "Data Science", cost: 25000 },
-  { name: "Software Engineering", cost: 23000 },
-];
+import { Bar, Line, Radar, Doughnut, PolarArea } from "react-chartjs-2";
+import { Children, useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Ranking() {
-  //const [courseData, setCourseData] = useState(dummyCourseData);
+  const [ranking, setRanking] = useState([]);
 
-  // Dummy course data
-  const dummyCourseData = [
-    {
-      name: "Bachelor of Computer Science",
-      cost: 20000,
-      studentReviews: 4.5,
-      employmentOutcomes: 85,
-    },
-    {
-      name: "Bachelor of Cybersecurity",
-      cost: 25000,
-      studentReviews: 4.2,
-      employmentOutcomes: 80,
-    },
-    {
-      name: "Bachelor of Information Technology",
-      cost: 18000,
-      studentReviews: 4.7,
-      employmentOutcomes: 90,
-    },
-  ];
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get("/api/courses/ranking");
+        setRanking(response.data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  const courseData = ranking?.map((rank) => {
+    return {
+      name: rank?.course?.name,
+      cost: rank?.cost,
+      studentReviews: rank?.studentReviews,
+      employmentOutcomes: rank?.employmentOutcomes,
+      courseDuration: rank?.courseDuration,
+      salaryRange: rank?.salaryRange,
+    };
+  });
+
 
   // Extract data for visualization
-  const courseNames = dummyCourseData.map((course) => course.name);
-  const courseCosts = dummyCourseData.map((course) => course.cost);
-  const studentReviews = dummyCourseData.map((course) => course.studentReviews);
-  const employmentOutcomes = dummyCourseData.map(
+  const courseNames = courseData.map((course) => course.name.toUpperCase());
+  const courseCosts = courseData.map((course) => course.cost);
+  const studentReviews = courseData.map((course) => course.studentReviews);
+  const employmentOutcomes = courseData.map(
     (course) => course.employmentOutcomes
   );
-
-  // Define data for the bar chart
-  const barChartData = {
-    labels: courseNames,
-    datasets: [
-      {
-        label: "Course Costs",
-        backgroundColor: "rgba(75,192,192,0.2)",
-        borderColor: "rgba(75,192,192,1)",
-        borderWidth: 1,
-        hoverBackgroundColor: "rgba(75,192,192,0.4)",
-        hoverBorderColor: "rgba(75,192,192,1)",
-        data: courseCosts,
-      },
-      {
-        label: "Student Reviews",
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
-        borderColor: "rgba(255, 99, 132, 1)",
-        borderWidth: 1,
-        hoverBackgroundColor: "rgba(255, 99, 132, 0.4)",
-        hoverBorderColor: "rgba(255, 99, 132, 1)",
-        data: studentReviews,
-      },
-    ],
-  };
-
-  // Define data for the radar chart
-  const radarChartData = {
-    labels: courseNames,
-    datasets: [
-      {
-        label: "Employment Outcomes",
-        backgroundColor: "rgba(255, 206, 86, 0.2)",
-        borderColor: "rgba(255, 206, 86, 1)",
-        pointBackgroundColor: "rgba(255, 206, 86, 1)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgba(255, 206, 86, 1)",
-        data: employmentOutcomes,
-      },
-    ],
-  };
-
-  return (
-    <>
-      <Header />
-
-      <Main>
-        <div className="container mx-auto px-4 py-8">
-          <div>
-            <CourseVisualizations />
-          </div>
-        </div>
-      </Main>
-      <Footer />
-    </>
-  );
-}
-
-const CourseVisualizations = () => {
-  // Dummy data for courses
-  const courseData = [
-    {
-      name: "Bachelor of Computer Science",
-      cost: 20000,
-      employabilityMetrics: {
-        employmentRates: 85,
-        employerSatisfaction: 4.6,
-      },
-      academicPerformance: {
-        academicReputation: 4.8,
-      },
-    },
-    {
-      name: "Bachelor of Cybersecurity",
-      cost: 22000,
-      employabilityMetrics: {
-        employmentRates: 80,
-        employerSatisfaction: 4.5,
-      },
-      academicPerformance: {
-        academicReputation: 4.7,
-      },
-    },
-    {
-      name: "Bachelor of Information Technology",
-      cost: 18000,
-      employabilityMetrics: {
-        employmentRates: 90,
-        employerSatisfaction: 4.8,
-      },
-      academicPerformance: {
-        academicReputation: 4.9,
-      },
-    },
-    // Add more courses here...
-  ];
-
-  // Extract data for visualization
-  const courseNames = courseData.map((course) => course.name);
-  const courseCosts = courseData.map((course) => course.cost);
-  const employmentRates = courseData.map(
-    (course) => course.employabilityMetrics.employmentRates
-  );
-  const academicReputations = courseData.map(
-    (course) => course.academicPerformance.academicReputation
-  );
-  const employerSatisfactions = courseData.map(
-    (course) => course.employabilityMetrics.employerSatisfaction
+  const courseDuration = courseData.map(
+    (course) => course.courseDuration
   );
 
-  // Define data for the bar chart (Course Cost Comparison)
   const costData = {
     labels: courseNames,
     datasets: [
@@ -173,94 +61,155 @@ const CourseVisualizations = () => {
     ],
   };
 
-  // Define data for the radar chart (Employment Rates Comparison)
-  const employmentData = {
+  const studentReviewsData = {
     labels: courseNames,
     datasets: [
       {
-        label: "Employment Rates",
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
-        borderColor: "rgba(255, 99, 132, 1)",
-        pointBackgroundColor: "rgba(255, 99, 132, 1)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgba(255, 99, 132, 1)",
-        data: employmentRates,
-      },
-    ],
-  };
-
-  // Define data for the radar chart (Academic Performance Comparison)
-  const academicData = {
-    labels: courseNames,
-    datasets: [
-      {
-        label: "Academic Reputation",
-        backgroundColor: "rgba(54, 162, 235, 0.2)",
-        borderColor: "rgba(54, 162, 235, 1)",
-        pointBackgroundColor: "rgba(54, 162, 235, 1)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgba(54, 162, 235, 1)",
-        data: academicReputations,
-      },
-    ],
-  };
-
-  // Define data for the pie chart (Employer Satisfaction Comparison)
-  const satisfactionData = {
-    labels: courseNames,
-    datasets: [
-      {
-        label: "Employer Satisfaction",
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 205, 86, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 205, 86, 1)",
-        ],
+        label: "Student Review",
+        backgroundColor: "rgba(75,192,192,0.2)",
+        borderColor: "rgba(75,192,192,1)",
         borderWidth: 1,
-        data: employerSatisfactions,
+        hoverBackgroundColor: "rgba(75,192,192,0.4)",
+        hoverBorderColor: "rgba(75,192,192,1)",
+        data: studentReviews,
+      },
+    ],
+  };
+
+  const employmentOutcomesData = {
+    labels: courseNames,
+    datasets: [
+      {
+        label: "Employment Outcomes",
+        backgroundColor: "rgba(75,192,192,0.2)",
+        borderColor: "rgba(75,192,192,1)",
+        borderWidth: 1,
+        hoverBackgroundColor: "rgba(75,192,192,0.4)",
+        hoverBorderColor: "rgba(75,192,192,1)",
+        data: employmentOutcomes,
+      },
+    ],
+  };
+
+  const courseDurationData = {
+    labels: courseNames,
+    datasets: [
+      {
+        label: "Course Duration",
+        backgroundColor: "rgba(75,192,192,0.2)",
+        borderColor: "rgba(75,192,192,1)",
+        borderWidth: 1,
+        hoverBackgroundColor: "rgba(75,192,192,0.4)",
+        hoverBorderColor: "rgba(75,192,192,1)",
+        data: courseDuration,
       },
     ],
   };
 
   return (
     <>
-      <div className="grid grid-cols-2 justify-center gap-4">
-        <div>
-          <h2 className="font-bold uppercase">Course Costs</h2>
-          <Bar data={costData} />
-        </div>
-        
-      </div>
-      <hr className="py-4" />
-      <div className="grid grid-cols-2 justify-center gap-4">
-        <div>
-          <h2 className="font-bold uppercase">Employment Rates</h2>
-          <Radar data={employmentData} />
-        </div>
-        
-      </div>
-      <hr className="py-4" />
-      <div className="grid grid-cols-2 justify-center gap-4">
-        <div>
-          <h2 className="font-bold uppercase">Academic Performance</h2>
-          <Radar data={academicData} />
-        </div>
+      <Header />
 
-      </div>
-      <hr className="py-4" />
-      <div className="grid grid-cols-2 justify-center gap-4">
-        <div>
-          <h2 className="font-bold uppercase">Academic Performance</h2>
-          <Pie data={satisfactionData} />
+      <Main>
+        <div className="container mx-auto px-4 py-8">
+          <div>
+            <SalaryComponent ranking={ranking} />
+            <RankingComponent title={"Course Cost"} ranking={ranking}>
+              <Bar data={costData} />
+            </RankingComponent>
+            <RankingComponent title={"Student Review"} ranking={ranking}>
+              <PolarArea data={studentReviewsData} />
+            </RankingComponent>
+            <RankingComponent title={"Employment Outcomes"} ranking={ranking}>
+              <Doughnut data={employmentOutcomesData} />
+            </RankingComponent>
+            <RankingComponent title={"Course Duration"} ranking={ranking}>
+              <Line data={courseDurationData} />
+            </RankingComponent>
+          </div>
         </div>
-      </div>
+      </Main>
+      <Footer />
     </>
   );
-};
+}
+
+
+function SalaryComponent({ ranking }) {
+  return (
+    <div className="bg-white py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 pb-4">
+        <dl className="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
+          {ranking.map((rank) => (
+            <div
+              key={rank.id}
+              className="mx-auto flex max-w-xs flex-col gap-y-4"
+            >
+              <dt className="text-xs leading-7 text-gray-900">
+                {rank?.course.name} estimated salary
+              </dt>
+              <dd className="order-first text-3xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
+                $ {rank?.salaryRange}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <hr />
+    </div>
+  );
+}
+
+function RankingComponent({ title, ranking, children }) {
+  return (
+    <>
+      <hr />
+      <h6 className="pl-2 pt-2 border-l-4 border-red-900 font-bold uppercase">
+        {title}
+      </h6>
+      <ul role="list" className="divide-y divide-gray-100 pb-10">
+        {ranking.map((rank) => (
+          <>
+            <li key={rank.name} className="flex justify-between gap-x-6 py-5">
+              <div className="flex min-w-0 gap-x-4">
+                <div className="min-w-0 flex-auto">
+                  <p className="text-sm font-bold leading-6 text-red-900 uppercase">
+                    {rank?.course.name}
+                  </p>
+                  <p className="mt-1 truncate text-xs leading-5 text-red-900">
+                    {rank.name}
+                  </p>
+                </div>
+              </div>
+              {title == "Course Cost" && (
+                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                  <p className="text-sm leading-6 text-gray-900">{rank.name}</p>
+                  ${rank.cost}
+                </div>
+              )}
+              {title == "Student Review" && (
+                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                  <p className="text-sm leading-6 text-gray-900">{rank.name}</p>
+                  {rank.studentReviews}
+                </div>
+              )}
+              {title == "Employment Outcomes" && (
+                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                  <p className="text-sm leading-6 text-gray-900">{rank.name}</p>
+                  {rank.employmentOutcomes}
+                </div>
+              )}
+              {title == "Course Duration" && (
+                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                  <p className="text-sm leading-6 text-gray-900">{rank.name}</p>
+                  {rank.courseDuration}
+                </div>
+              )}
+            </li>
+          </>
+        ))}
+        {children}
+      </ul>
+    </>
+  );
+}

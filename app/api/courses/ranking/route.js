@@ -1,15 +1,14 @@
-import prisma from "../../../prisma/prisma";
+import prisma from "../../../../prisma/prisma";
 
 export async function GET() {
   try {
-    const courses = await prisma.course.findMany({
+    const ranking = await prisma.ranking.findMany({
       include: {
-        institution: true,
-        Ranking: true
+        course: true
       },
     });
 
-    return Response.json(courses);
+    return Response.json(ranking);
   } catch (error) {
     console.error(error);
     return Response.json({ error: "Internal Server Error" });
