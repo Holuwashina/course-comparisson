@@ -5,6 +5,8 @@ import Footer from "../components/Footer";
 import { Bar, Line, Radar, Doughnut, PolarArea } from "react-chartjs-2";
 import { Children, useEffect, useState } from "react";
 import axios from "axios";
+import { VerticalBarChart, PieChart } from "amazing-react-charts";
+import { Typography } from "@material-tailwind/react";
 
 export default function Ranking() {
   const [ranking, setRanking] = useState([]);
@@ -37,7 +39,10 @@ export default function Ranking() {
 
   // Extract data for visualization
   const courseNames = courseData.map((course) => course.name.toUpperCase());
-  const courseCosts = courseData.map((course) => course.cost);
+  const courseCosts = courseData.map((course) => ({
+    name: course.name,
+    value: course.cost,
+  }));
   const studentReviews = courseData.map((course) => course.studentReviews);
   const employmentOutcomes = courseData.map(
     (course) => course.employmentOutcomes
@@ -110,27 +115,57 @@ export default function Ranking() {
 
       <Main>
         <div className="container mx-auto px-4 py-8">
-          <div>
-            <SalaryComponent ranking={ranking} />
-            <RankingComponent title={"Course Cost"} ranking={ranking}>
-              <Bar data={costData} />
-            </RankingComponent>
-            <RankingComponent title={"Student Review"} ranking={ranking}>
-              <PolarArea data={studentReviewsData} />
-            </RankingComponent>
-            <RankingComponent title={"Employment Outcomes"} ranking={ranking}>
-              <Doughnut data={employmentOutcomesData} />
-            </RankingComponent>
-            <RankingComponent title={"Course Duration"} ranking={ranking}>
-              <Line data={courseDurationData} />
-            </RankingComponent>
+          <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center py-8">
+            <div>
+              <Typography variant="h5" className="uppercase font-extrabold tracking-wider">
+                Programmes Cost
+              </Typography>
+              <Typography>{`Dive into the intricate details of course costs at La Trobe University, unveiling a comprehensive overview of expenses associated with different academic programs. This visualization sheds light on the financial aspects of pursuing education at La Trobe, offering valuable insights into the investment required for each program and aiding prospective students in making informed decisions about their academic journey.`}</Typography>
+            </div>{" "}
+            <PieChart
+              legendType="scroll"
+              colors={["red", "yellow", "green", "blue"]}
+              legendPosition="outside"
+              radius="75%"
+              toolboxTooltip={{ dataView: {title: "Breakdown"}, saveAsImageWithTitle: {title: "Save"} }}
+              resultFormatType="percent"
+              labelFontColor="black"
+              tooltipTitle="title"
+              center={["50%", "50%"]}
+              data={courseCosts}
+            />
           </div>
+          <hr />
         </div>
       </Main>
       <Footer />
     </>
   );
 }
+
+{
+  /* <SalaryComponent ranking={ranking} /> */
+}
+
+{
+  /* <RankingComponent title={"Course Cost"} ranking={ranking}> */
+}
+
+{
+  /* <Bar data={costData} /> */
+}
+{
+  /* </RankingComponent> */
+}
+// <RankingComponent title={"Student Review"} ranking={ranking}>
+//   {/* <PolarArea data={studentReviewsData} /> */}
+// </RankingComponent>
+// <RankingComponent title={"Employment Outcomes"} ranking={ranking}>
+//   {/* <Doughnut data={employmentOutcomesData} /> */}
+// </RankingComponent>
+// <RankingComponent title={"Course Duration"} ranking={ranking}>
+//   {/* <Line data={courseDurationData} /> */}
+// </RankingComponent>
 
 function SalaryComponent({ ranking }) {
   return (

@@ -1,18 +1,21 @@
 "use client";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "../components/Header";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
-import { Bar, Line, Radar, Doughnut, PolarArea } from "react-chartjs-2";
-import { Children, useEffect, useState } from "react";
-import { OpenAI } from "openai"; // Import OpenAI library
-import { v4 as uuidv4 } from "uuid"; // Import UUID library for generating unique IDs
-import axios from "axios";
 
-const apiKey = "sk-proj-vmXmr626QMmGeXKDPiYET3BlbkFJlQlzmYLykdsZYIu4R68Y";
+const apiKey = "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";
 
-export default function Chat() {
+function useChat() {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    {
+      id: 0,
+      text: "Hello! I'm a chatbot. How can I help you?",
+      isUser: false,
+    },
+  ]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,18 +26,20 @@ export default function Chat() {
       text: input,
       isUser: true,
     };
-    setMessages([...messages, userMessage]);
-    setInput("");
+    setInput(""); // Clear the input field first
+    setMessages([...messages, userMessage]); // Update the messages state
 
     try {
+      // Make the API request after the state has been updated
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
         {
-          model: "gpt-3.5-turbo-instruct",
-          prompt: input,
-          max_tokens: 50,
+          model: "gpt-3.5-turbo",
+          messages: [...messages, userMessage].map((message) => ({
+            role: "system",
+            content: `please eevry content should be related to latrobe university, ${message.text}`,
+          })),
           temperature: 0.7,
-          stop: "\n",
         },
         {
           headers: {
@@ -46,58 +51,73 @@ export default function Chat() {
 
       const botMessage = {
         id: messages.length + 1,
-        text: response.data.choices[0].text.trim(),
+        text: response.data.choices[0].message.content,
         isUser: false,
       };
-      setMessages([...messages, botMessage]);
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
-  console.log(messages);
+  return { input, setInput, messages, handleSubmit };
+}
+
+export default function Chat() {
+  const { input, setInput, messages, handleSubmit } = useChat();
+
+  useEffect(() => {
+    // Scroll to the bottom of the chat when new messages are added
+    const chatContainer = document.getElementById("chat-container");
+    if (chatContainer) {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+  }, [messages]);
 
   return (
     <>
       <Header />
-
       <Main>
-        <div className="container mx-auto px-4 py-8 h-full">
-          <div className="flex flex-col h-full">
-            <div className="flex-1 p-4 overflow-y-auto">
-              {messages.map((message) => (
+        <div
+          id="chat-container"
+          className="container mx-auto px-4 py-8 min-h-screen relative max-w-3xl flex flex-col justify-between"
+        >
+          <div className="flex-1 p-4 max-h-screen"
+           style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }} // Added styles for scrollbar
+           
+          >
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex mb-2 ${
+                  message.isUser ? "justify-end" : "justify-start"
+                }`}
+              >
                 <div
-                  key={message.id}
-                  className={`flex mb-2 ${
-                    message.isUser ? "justify-end" : "justify-start"
+                  className={`prose p-2 rounded-lg ${
+                    message.isUser ? "bg-blue-400 text-white" : "bg-gray-200"
                   }`}
                 >
-                  <div
-                    className={`p-2 max-w-sm rounded-lg ${
-                      message.isUser ? "bg-blue-400 text-white" : "bg-gray-200"
-                    }`}
-                  >
-                    {message.text}
-                  </div>
+                  {message.text}
                 </div>
-              ))}
-            </div>
-            <form onSubmit={handleSubmit} className="flex items-center p-4">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your question..."
-                className="flex-1 px-4 py-2 mr-2 border rounded-lg"
-              />
-              <button
-                type="submit"
-                className="px-4 py-2 text-white bg-blue-500 border rounded-lg hover:bg-blue-600"
-              >
-                Send
-              </button>
-            </form>
+              </div>
+            ))}
           </div>
+          <form onSubmit={handleSubmit} className="flex items-center p-4">
+            <textarea
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Type your question..."
+              className="flex-1 px-4 py-2 mr-2 border rounded-lg"
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 text-white bg-red-500 border rounded-lg hover:bg-red-600"
+            >
+              Send
+            </button>
+          </form>
         </div>
       </Main>
       <Footer />

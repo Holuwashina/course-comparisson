@@ -89,7 +89,7 @@ export default function Header() {
           Ranking
         </Link>
       </Typography>
-      <Typography
+      {/* <Typography
         as="li"
         variant="small"
         color="blue-gray"
@@ -112,7 +112,7 @@ export default function Header() {
         <Link href="/review" className="flex items-center">
           Write Review
         </Link>
-      </Typography>
+      </Typography> */}
       <Typography
         as="li"
         variant="small"
@@ -134,7 +134,7 @@ export default function Header() {
           />
         </svg>
         <Link href="/chat" className="flex items-center">
-          Chat Box
+          ChatBot
         </Link>
       </Typography>
     </ul>
