@@ -12,7 +12,7 @@ function useChat() {
   const [messages, setMessages] = useState([
     {
       id: 0,
-      text: "Hello! I'm a chatbot. How can I help you?",
+      text: "Hello! I'm a chatbot. I can help you compare courses for latrobe university?",
       isUser: false,
     },
   ]);
@@ -106,6 +106,7 @@ export default function Chat() {
           <form onSubmit={handleSubmit} className="flex items-center p-4">
             <textarea
               type="text"
+              rows={5}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your question..."

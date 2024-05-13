@@ -46,7 +46,7 @@ export default function Header() {
           Courses
         </Link>
       </Typography>
-      <Typography
+      {/* <Typography
         as="li"
         variant="small"
         color="blue-gray"
@@ -66,7 +66,7 @@ export default function Header() {
         <Link href="/compare" className="flex items-center">
           Compare
         </Link>
-      </Typography>
+      </Typography> */}
       <Typography
         as="li"
         variant="small"
@@ -180,7 +180,7 @@ export default function Header() {
               </svg>
             </div>
           </div>
-          <Button size="md" color="red" className="rounded-lg ">
+          <Button size="md" className="rounded-lg bg-red-900 text-xs">
             Search
           </Button>
         </div>

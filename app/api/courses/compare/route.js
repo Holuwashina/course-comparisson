@@ -20,6 +20,30 @@ export async function GET(request) {
         institution: true,
         CoreSubject: true,
         MajorCourse: true,
+        Overview: {
+          select: {
+            award: true,
+            vtacCode: true,
+            startDate: true,
+            duration: true,
+            locations: true,
+            studyFlex: true,
+            prerequisite: true,
+            fees: true,
+          }
+        },
+        Pathway: {
+          select: {
+            overview: true,
+            description: true,
+          },
+          orderBy: {
+            overview: "asc",
+          },
+        },
+        LearningOutcome: true,
+        CareerOpportunity: true,
+        ProfessionalRecognition: true,
         CourseDetail: {
           select: {
             index: true,
@@ -42,6 +66,30 @@ export async function GET(request) {
         institution: true,
         CoreSubject: true,
         MajorCourse: true,
+        Overview: {
+          select: {
+            award: true,
+            vtacCode: true,
+            startDate: true,
+            duration: true,
+            locations: true,
+            studyFlex: true,
+            prerequisite: true,
+            fees: true,
+          }
+        },
+        Pathway: {
+          select: {
+            overview: true,
+            description: true,
+          },
+          orderBy: {
+            overview: "asc",
+          },
+        },
+        LearningOutcome: true,
+        CareerOpportunity: true,
+        ProfessionalRecognition: true,
         CourseDetail: {
           select: {
             index: true,
@@ -58,8 +106,7 @@ export async function GET(request) {
 
     return Response.json({
       courses,
-      course1,
-      course2,
+      comparison: [course1, course2],
     });
   } catch (error) {
     console.error(error);

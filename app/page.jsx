@@ -82,7 +82,7 @@ export default function Home() {
                 </h1>
                 <p className="py-2 z-10">Discover Your Path with Confidence</p>
               </div>
-              <div className="flex items-center gap-2 pt-8">
+              <div className="md:flex items-center gap-2 pt-8">
                 <div className="w-96">
                   <Select
                     // value={selectedCourses.course1}
@@ -140,8 +140,8 @@ export default function Home() {
                     )}
                   </Select>
                 </div>
-                <Button onClick={handleSubmit} color="red" size="lg">
-                  Compare Course
+                <Button onClick={handleSubmit} className="bg-red-900 text-xs" size="lg">
+                  Compare
                 </Button>
               </div>
               <div className="min-h-14">
@@ -156,7 +156,7 @@ export default function Home() {
         </div>
         {/* Features Section */}
         <section className="px-4 py-2 lg:px-44 lg:py-4 min-h-screen">
-          <Alert className="rounded-none border-l-4 border-red-600 bg-red-300/10 text-red-600 uppercase font-extrabold tracking-wider">
+          <Alert className="rounded-none border-l-4 border-gray-100 bg-red-900 text-gray-100 uppercase font-bold tracking-wider">
             Featured Courses
           </Alert>
           <div className="flex gap-4 pb-[36px]">
