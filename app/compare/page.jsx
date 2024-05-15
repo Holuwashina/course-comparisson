@@ -8,7 +8,6 @@ import {
   Card,
   CardBody,
   CardFooter,
-  Navbar,
   Option,
   Select,
   Spinner,
@@ -18,19 +17,19 @@ import { useRouter, useSearchParams } from "next/navigation.js";
 import { Suspense, useEffect, useState } from "react";
 import axios from "axios";
 
- function ComparisonPage() {
+function ComparisonPage() {
   const searchParams = useSearchParams();
+  const c1 = searchParams.get("c1");
+  const c2 = searchParams.get("c2");
+
   const [courses, setCourses] = useState(null);
   const [course, setCourse] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedCourses, setSelectedCourses] = useState({
-    course1: "",
-    course2: "",
+    course1: c1,
+    course2: c2,
   });
-
-  const c1 = searchParams.get("c1");
-  const c2 = searchParams.get("c2");
 
   const fetchCourses = async (arg1, arg2) => {
     try {
@@ -112,7 +111,7 @@ import axios from "axios";
             <div className="md:flex items-center gap-2 pt-8">
               <div className="w-96 p-2">
                 <Select
-                  //value={selectedCourses.course1}
+                  value={selectedCourses.course1}
                   onChange={(selected) =>
                     handleCourseChange(selected, "course1")
                   }
@@ -145,7 +144,7 @@ import axios from "axios";
               </div>
               <div className="w-96 p-2">
                 <Select
-                  // value={selectedCourses.course2}
+                  value={selectedCourses.course2}
                   onChange={(selected) =>
                     handleCourseChange(selected, "course2")
                   }
@@ -274,7 +273,10 @@ const ComparisonTable = ({ data }) => {
       <thead className="bg-gray-50">
         <tr>
           {data?.map((course, index) => (
-            <th key={index} className="w-1/2 align-baseline px-6 py-3 font-normal text-left text-gray-500">
+            <th
+              key={index}
+              className="w-1/2 align-baseline px-6 py-3 font-normal text-left text-gray-500"
+            >
               <Card className="mt-6 shadow-none border rounded-none border-red-600 mb-4">
                 <CardBody>
                   <Typography
@@ -366,7 +368,7 @@ const ComparisonTable = ({ data }) => {
                       return (
                         <tr key={index}>
                           <td className="px-6 py-4">
-                            <h6 className="text-sm font-bold text-red-600 pb-1 tracking-wide">
+                            <h6 className="text-sm font-bold text-red-600 pb-1 tracking-wide uppercase">
                               {`${pathway.overview}`}
                             </h6>
                             <p className="text-sm font-medium text-gray-900">
@@ -376,6 +378,104 @@ const ComparisonTable = ({ data }) => {
                         </tr>
                       );
                     })}
+                  </tbody>
+                </table>
+              </td>
+            );
+          })}
+        </tr>
+
+        {/* Major Structure */}
+        <tr>
+          {data?.map((course, index) => {
+            console.log(course);
+            return (
+              <td className="w-1/2 align-baseline" key={index}>
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th
+                        colSpan={2}
+                        className="px-6 py-3 text-left text-xs font-bold bg-red-900 text-gray-100 uppercase tracking-wider"
+                      >
+                        Major Structure
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {course?.MajorCourse.length == 0 ? (
+                      <tr>
+                        <td className="px-6 py-4">
+                        <h6 className="text-sm font-bold text-red-600 pb-1 tracking-wide">
+                            No major for this course
+                          </h6>
+                        </td>
+                      </tr>
+                    ) : (
+                      course?.MajorCourse?.map((major, index) => {
+                        return (
+                          <tr key={index}>
+                            <td className="px-6 py-4">
+                              <h6 className="text-sm font-bold text-red-600 pb-1 tracking-wide">
+                                <a href={`${major.link}`}>{`${major.name}`}</a>
+                              </h6>
+                              <p className="text-sm font-medium text-gray-900">
+                                {`${major.code}`}
+                              </p>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
+                  </tbody>
+                </table>
+              </td>
+            );
+          })}
+        </tr>
+
+        {/* Major Structure */}
+        <tr>
+          {data?.map((course, index) => {
+            console.log(course);
+            return (
+              <td className="w-1/2 align-baseline" key={index}>
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th
+                        colSpan={2}
+                        className="px-6 py-3 text-left text-xs font-bold bg-red-900 text-gray-100 uppercase tracking-wider"
+                      >
+                        Core Subjects
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {course?.MajorCourse.length == 0 ? (
+                      <tr>
+                        <td className="px-6 py-4">
+                        <h6 className="text-sm font-bold text-red-600 pb-1 tracking-wide">
+                            No major for this course
+                          </h6>
+                        </td>
+                      </tr>
+                    ) : (
+                      course?.CoreSubject?.map((subject, index) => {
+                        return (
+                          <tr key={index}>
+                            <td className="px-6 py-4">
+                              <h6 className="text-sm font-bold text-red-600 pb-1 tracking-wide">
+                                <a href={`${subject.link}`}>{`${subject.name}`}</a>
+                              </h6>
+                              <p className="text-sm font-medium text-gray-900">
+                                {`${subject.code}`}
+                              </p>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
                   </tbody>
                 </table>
               </td>
@@ -459,7 +559,7 @@ const ComparisonTable = ({ data }) => {
           })}
         </tr>
 
-          {/* Professional Recognition */}
+        {/* Professional Recognition */}
         <tr>
           {data?.map((course, index) => {
             console.log(course);
@@ -477,17 +577,19 @@ const ComparisonTable = ({ data }) => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {course?.ProfessionalRecognition?.map((recognition, index) => {
-                      return (
-                        <tr key={index}>
-                          <td className="px-6 py-4">
-                            <p className="text-sm pb-1 tracking-wide">
-                              {`${recognition.overview}`}
-                            </p>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {course?.ProfessionalRecognition?.map(
+                      (recognition, index) => {
+                        return (
+                          <tr key={index}>
+                            <td className="px-6 py-4">
+                              <p className="text-sm pb-1 tracking-wide">
+                                {`${recognition.overview}`}
+                              </p>
+                            </td>
+                          </tr>
+                        );
+                      }
+                    )}
                   </tbody>
                 </table>
               </td>

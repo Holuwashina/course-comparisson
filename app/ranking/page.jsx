@@ -6,7 +6,7 @@ import { Bar, Line, Radar, Doughnut, PolarArea } from "react-chartjs-2";
 import { Children, useEffect, useState } from "react";
 import axios from "axios";
 import { VerticalBarChart, PieChart } from "amazing-react-charts";
-import { Typography } from "@material-tailwind/react";
+import { Spinner, Typography } from "@material-tailwind/react";
 
 export default function Ranking() {
   const [ranking, setRanking] = useState([]);
@@ -24,7 +24,14 @@ export default function Ranking() {
     fetchCourses();
   }, []);
 
-  if (ranking.length === 0) return;
+
+  if (ranking.length === 0) {
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
+  }
 
   const courseData = ranking?.map((rank) => {
     return {
@@ -48,6 +55,8 @@ export default function Ranking() {
     (course) => course.employmentOutcomes
   );
   const courseDuration = courseData.map((course) => course.courseDuration);
+
+  console.log(courseNames);
 
   const costData = {
     labels: courseNames,
@@ -125,7 +134,7 @@ export default function Ranking() {
             <PieChart
               legendType="scroll"
               colors={["red", "yellow", "green", "blue"]}
-              legendPosition="outside"
+              legendPosition="inside"
               radius="75%"
               toolboxTooltip={{ dataView: {title: "Breakdown"}, saveAsImageWithTitle: {title: "Save"} }}
               resultFormatType="percent"
@@ -133,6 +142,7 @@ export default function Ranking() {
               tooltipTitle="title"
               center={["50%", "50%"]}
               data={courseCosts}
+              titleFontSize={16}
             />
           </div>
           <hr />

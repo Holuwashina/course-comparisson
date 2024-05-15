@@ -5,7 +5,6 @@ import Header from "../components/Header";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
 
-const apiKey = "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";
 
 function useChat() {
   const [input, setInput] = useState("");
