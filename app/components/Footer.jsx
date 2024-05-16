@@ -5,15 +5,78 @@ import Image from "next/image";
 const LINKS = [
   {
     title: "STUDY WITH US",
-    items: ["Apply", "Courses", "Life at La Trobe", "FAQs", "Scholarships"],
+    items: [
+      {
+        key: "Apply",
+        link: "https://www.latrobe.edu.au/study/apply",
+      },
+      {
+        key: "Courses",
+        link: "https://www.latrobe.edu.au/courses",
+      },
+      {
+        key: "Life at La Trobe",
+        link: "https://www.latrobe.edu.au/study/life",
+      },
+      {
+        key: "FAQs",
+        link: "https://latrobe.custhelp.com/app/",
+      },
+      {
+        key: "Scholarships",
+        link: "https://www.latrobe.edu.au/study/scholarships",
+      },
+    ],
   },
   {
     title: "INTERNATIONAL",
-    items: ["International home", "Courses and study options", "Study abroad and exchange", "Fees and scholarships", "International student enquiries"],
+    items: [
+      {
+        key: "International home",
+        link: "https://www.latrobe.edu.au/international",
+      },
+      {
+        key: "Courses and study options",
+        link: "https://www.latrobe.edu.au/international/study",
+      },
+      {
+        key: "Study abroad and exchange",
+        link: "https://www.latrobe.edu.au/international/study/australia",
+      },
+      {
+        key: "Fees and scholarships",
+        link: "https://www.latrobe.edu.au/international/fees",
+      },
+      {
+        key: "International student enquiries",
+        link: "https://www.latrobe.edu.au/international/contact",
+      },
+    ],
   },
   {
     title: "CONNECT",
-    items: ["Alumni", "Directory of staff", "Give to La Trobe", "Jobs at La Trobe", "Schools and departments"],
+    items: [
+      {
+        key: "Alumni",
+        link: "https://www.latrobe.edu.au/alumni",
+      },
+      {
+        key: "Directory of staff",
+        link: "https://www.latrobe.edu.au/directory",
+      },
+      {
+        key: "Give to La Trobe",
+        link: "https://www.latrobe.edu.au/giving",
+      },
+      {
+        key: "Jobs at La Trobe",
+        link: "https://www.latrobe.edu.au/jobs",
+      },
+      {
+        key: "Schools and departments",
+        link: "https://www.latrobe.edu.au/schools-departments",
+      }
+    ],
   },
 ];
 
@@ -21,16 +84,19 @@ const currentYear = new Date().getFullYear();
 
 export default function Footer() {
   return (
-    <footer className="relative w-full pt-8 border-t">
+    <footer className="shadow-lg relative w-full pt-8 border-t">
       <div className="mx-auto w-full max-w-7xl px-8">
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
           <div>
             <Image src="/logo.svg" width={200} height={150} />
             <Typography variant="h5" className="pt-2">
-            Design Your Success
+              Design Your Success
             </Typography>
-            <Typography variant="h6" className="pt-2 mb-6 w-[400px] text-gray-800">
-           Compare Courses, Transform Your Future!
+            <Typography
+              variant="h6"
+              className="pt-2 mb-6 w-[400px] text-gray-800"
+            >
+              Compare Courses, Transform Your Future!
             </Typography>
           </div>
           <div className="grid grid-cols-3 justify-between gap-4">
@@ -43,15 +109,15 @@ export default function Footer() {
                 >
                   {title}
                 </Typography>
-                {items.map((link) => (
-                  <li key={link}>
+                {items.map((item) => (
+                  <li key={item.key}>
                     <Typography
                       as="a"
-                      href="#"
+                      href={`${item.link || "#"}`}
                       color="gray"
                       className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
                     >
-                      {link}
+                      {item.key}
                     </Typography>
                   </li>
                 ))}

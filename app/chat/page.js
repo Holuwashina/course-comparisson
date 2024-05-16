@@ -4,6 +4,7 @@ import axios from "axios";
 import Header from "../components/Header";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
+import { Button, Select, Typography } from "@material-tailwind/react";
 
 
 function useChat() {
@@ -11,7 +12,7 @@ function useChat() {
   const [messages, setMessages] = useState([
     {
       id: 0,
-      text: "Hello! I'm a chatbot. I can help you compare courses for latrobe university?",
+      text: "Hello! I'm a chatbot. how can I help you to compare courses for latrobe university?",
       isUser: false,
     },
   ]);
@@ -77,9 +78,26 @@ export default function Chat() {
     <>
       <Header />
       <Main>
+         {/* Hero Section */}
+         <div className="bg-red-900 h-[450px] text-center">
+          <div className="px-4 py-2 lg:px-44 lg:py-4">
+            <div className="pt-10 text-white">
+              <h1 className="text-5xl font-extrabold z-10">
+              Navigate Your Academic Path
+              </h1>
+              <h1 className="font-bold z-10 tracking-wider">
+              Interact with Our LLM for Latrobe University Course Comparison
+              </h1>
+              <p className="py-2 z-10">Empower Your Decision-Making Process with Personalized Insights</p>
+            </div>
+          </div>
+        </div>
+
+
+
         <div
           id="chat-container"
-          className="container mx-auto px-4 py-8 min-h-screen relative max-w-3xl flex flex-col justify-between"
+          className="container shadow-lg mt-[-10%] mb-5 rounded-md bg-white mx-auto px-4 py-8 min-h-screen relative max-w-4xl flex flex-col justify-between"
         >
           <div className="flex-1 p-4 max-h-screen"
            style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }} // Added styles for scrollbar

@@ -230,42 +230,6 @@ const ComparePageWithSuspense = () => (
 
 export default ComparePageWithSuspense;
 
-import { Disclosure } from "@headlessui/react";
-import { ChevronUpIcon } from "@heroicons/react/20/solid";
-
-// @ts-ignore
-// export function DropDown({ subjects }) {
-//   return (
-//     <div className="w-full pt-5">
-//       <div className="mx-auto w-full bg-white p-2">
-//         {subjects?.map(({ name, content }, index) => (
-//           <Disclosure defaultOpen={index == 0 ? true : false} key={index}>
-//             {({ open }) => (
-//               <>
-//                 <Disclosure.Button className="flex w-full justify-between bg-red-100 px-4 py-2 text-left text-sm font-medium text-red-900 ">
-//                   <span>{name}</span>
-//                   <ChevronUpIcon
-//                     className={`${
-//                       open ? "rotate-180 transform" : ""
-//                     } h-5 w-5 text-purple-500`}
-//                   />
-//                 </Disclosure.Button>
-//                 <Disclosure.Panel className="px-4 pb-2 pt-4 text-sm text-gray-500">
-//                   <div
-//                     className="prose prose-headings:uppercase prose-headings:max-w-md prose-headings:font-extrabold prose-a:text-red-600 max-w-none"
-//                     dangerouslySetInnerHTML={{
-//                       __html: content,
-//                     }}
-//                   />
-//                 </Disclosure.Panel>
-//               </>
-//             )}
-//           </Disclosure>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
 
 const ComparisonTable = ({ data }) => {
   return (
@@ -305,7 +269,6 @@ const ComparisonTable = ({ data }) => {
         {/* Overview */}
         <tr>
           {data?.map((course, index) => {
-            console.log(course);
             return (
               <td className="w-1/2 align-baseline" key={index}>
                 <table className="min-w-full divide-y divide-gray-200">
@@ -349,7 +312,6 @@ const ComparisonTable = ({ data }) => {
         {/* Pathway */}
         <tr>
           {data?.map((course, index) => {
-            console.log(course);
             return (
               <td className="w-1/2 align-baseline" key={index}>
                 <table className="min-w-full divide-y divide-gray-200">
@@ -388,7 +350,6 @@ const ComparisonTable = ({ data }) => {
         {/* Major Structure */}
         <tr>
           {data?.map((course, index) => {
-            console.log(course);
             return (
               <td className="w-1/2 align-baseline" key={index}>
                 <table className="min-w-full divide-y divide-gray-200">
@@ -437,7 +398,6 @@ const ComparisonTable = ({ data }) => {
         {/* Major Structure */}
         <tr>
           {data?.map((course, index) => {
-            console.log(course);
             return (
               <td className="w-1/2 align-baseline" key={index}>
                 <table className="min-w-full divide-y divide-gray-200">
@@ -452,11 +412,11 @@ const ComparisonTable = ({ data }) => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {course?.MajorCourse.length == 0 ? (
+                    {course?.CoreSubject.length == 0 ? (
                       <tr>
                         <td className="px-6 py-4">
                         <h6 className="text-sm font-bold text-red-600 pb-1 tracking-wide">
-                            No major for this course
+                            No core subject(s) for this course
                           </h6>
                         </td>
                       </tr>
@@ -486,7 +446,6 @@ const ComparisonTable = ({ data }) => {
         {/* LearningOutcome */}
         <tr>
           {data?.map((course, index) => {
-            console.log(course);
             return (
               <td className="w-1/2 align-baseline" key={index}>
                 <table className="min-w-full divide-y divide-gray-200">
@@ -523,7 +482,6 @@ const ComparisonTable = ({ data }) => {
 
         <tr>
           {data?.map((course, index) => {
-            console.log(course);
             return (
               <td className="w-1/2 align-baseline" key={index}>
                 <table className="min-w-full divide-y divide-gray-200">
@@ -562,7 +520,6 @@ const ComparisonTable = ({ data }) => {
         {/* Professional Recognition */}
         <tr>
           {data?.map((course, index) => {
-            console.log(course);
             return (
               <td className="w-1/2 align-baseline" key={index}>
                 <table className="min-w-full divide-y divide-gray-200">
@@ -607,3 +564,43 @@ function formatFieldName(str) {
   // Capitalize the first letter of each word
   return formattedStr.charAt(0).toUpperCase() + formattedStr.slice(1);
 }
+
+
+
+
+import { Disclosure } from "@headlessui/react";
+import { ChevronUpIcon } from "@heroicons/react/20/solid";
+
+// @ts-ignore
+// export function DropDown({ subjects }) {
+//   return (
+//     <div className="w-full pt-5">
+//       <div className="mx-auto w-full bg-white p-2">
+//         {subjects?.map(({ name, content }, index) => (
+//           <Disclosure defaultOpen={index == 0 ? true : false} key={index}>
+//             {({ open }) => (
+//               <>
+//                 <Disclosure.Button className="flex w-full justify-between bg-red-100 px-4 py-2 text-left text-sm font-medium text-red-900 ">
+//                   <span>{name}</span>
+//                   <ChevronUpIcon
+//                     className={`${
+//                       open ? "rotate-180 transform" : ""
+//                     } h-5 w-5 text-purple-500`}
+//                   />
+//                 </Disclosure.Button>
+//                 <Disclosure.Panel className="px-4 pb-2 pt-4 text-sm text-gray-500">
+//                   <div
+//                     className="prose prose-headings:uppercase prose-headings:max-w-md prose-headings:font-extrabold prose-a:text-red-600 max-w-none"
+//                     dangerouslySetInnerHTML={{
+//                       __html: content,
+//                     }}
+//                   />
+//                 </Disclosure.Panel>
+//               </>
+//             )}
+//           </Disclosure>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
