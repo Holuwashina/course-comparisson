@@ -5,7 +5,12 @@ import Footer from "../components/Footer";
 import { Bar, Line, Radar, Doughnut, PolarArea } from "react-chartjs-2";
 import { Children, useEffect, useState } from "react";
 import axios from "axios";
-import { VerticalBarChart, PieChart } from "amazing-react-charts";
+import {
+  DonutChart,
+  HorizontalBarChart,
+  PieChart,
+  VerticalBarChart,
+} from "amazing-react-charts";
 import { Spinner, Typography } from "@material-tailwind/react";
 
 export default function Ranking() {
@@ -24,8 +29,7 @@ export default function Ranking() {
     fetchCourses();
   }, []);
 
-
-  if (ranking.length === 0) {
+  if (ranking?.length === 0) {
     return (
       <div className="flex justify-center items-center">
         <Spinner />
@@ -125,7 +129,10 @@ export default function Ranking() {
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center py-8">
             <div>
-              <Typography variant="h5" className="uppercase font-extrabold tracking-wider">
+              <Typography
+                variant="h5"
+                className="uppercase font-extrabold tracking-wider"
+              >
                 Programmes Cost
               </Typography>
               <Typography>{`Dive into the intricate details of course costs at La Trobe University, unveiling a comprehensive overview of expenses associated with different academic programs. This visualization sheds light on the financial aspects of pursuing education at La Trobe, offering valuable insights into the investment required for each program and aiding prospective students in making informed decisions about their academic journey.`}</Typography>
@@ -135,7 +142,9 @@ export default function Ranking() {
               colors={["red", "yellow", "green", "blue"]}
               legendPosition="inside"
               radius="75%"
-              toolboxTooltip={{ dataView: {title: "Breakdown"}, saveAsImageWithTitle: {title: "Save"} }}
+              toolboxTooltip={{
+                saveAsImageWithTitle: { title: "Save" },
+              }}
               resultFormatType="percent"
               labelFontColor="black"
               tooltipTitle="title"
@@ -145,112 +154,125 @@ export default function Ranking() {
             />
           </div>
           <hr />
+          <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center py-8">
+            <div>
+              <Typography
+                variant="h5"
+                className="uppercase font-extrabold tracking-wider"
+              >
+                Programme Duration
+              </Typography>
+              <Typography>{`Explore the comprehensive timeline of project durations at La Trobe University, providing a detailed overview of the timeframes associated with various academic projects. This visualization illuminates the temporal aspects of undertaking these projects, offering valuable insights into the commitment required for each endeavor.By understanding the duration of different projects, prospective students can make informed decisions about their academic planning and time management, ensuring a well-structured and successful educational journey.`}</Typography>
+            </div>{" "}
+            <HorizontalBarChart
+              toolboxTooltip={{
+                saveAsImageWithTitle: { title: "Save" },
+              }}
+              boldTickLabel
+              showTickInfos
+              marginLeftTitle="50%"
+              xType="yaer"
+              onClickBar={(item) => window.alert(item.data.value)}
+              tooltip={{
+                label: "Duration",
+                result: "Years",
+              }}
+              data={[
+                {
+                  label: "Computer science",
+                  result: 4,
+                  style: { color: "red" },
+                  itemId: "Com Sci",
+                },
+                {
+                  label: "Cyber Security",
+                  result: 4,
+                  style: { color: "yellow" },
+                  itemId: "Cyber",
+                },
+                {
+                  label: "Information Technology",
+                  result: 3,
+                  style: { color: "green" },
+                  itemId: "Info Tech",
+                },
+              ]}
+            />
+          </div>
+          <hr />
+          <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center py-8">
+            <div>
+              <Typography
+                variant="h5"
+                className="uppercase font-extrabold tracking-wider"
+              >
+                Programme Selection Rate
+              </Typography>
+              <Typography>{`Explore the competitive landscape of admissions at La Trobe University, delving into the detailed selection rates across various academic programs. This analysis provides a clear picture of the acceptance rates, highlighting the level of competition prospective students may face. Gain valuable insights into the likelihood of securing a spot in your desired program, aiding you in making informed decisions about your academic pursuits and application strategies.`}</Typography>
+            </div>{" "}
+            <DonutChart
+              toolboxTooltip={{
+                saveAsImageWithTitle: { title: "Save" },
+              }}
+              colors={["red", "orange", "yellow", "green"]}
+              legendPosition="outside"
+              resultFormatType="percent"
+              center={["50%", "50%"]}
+              donutRadius={["58%", "70%"]}
+              tooltip={{
+                label: "Programme",
+                result: "Selection rate",
+              }}
+              data={[
+                { name: "Computer Science", value: 61.75 },
+                { name: "Information Technology", value: 56 },
+                { name: "Cyber Security", value: 60.2 },
+              ]}
+            />
+          </div>
+          <hr />
+          <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center py-8">
+            <div>
+              <Typography
+                variant="h5"
+                className="uppercase font-extrabold tracking-wider"
+              >
+                Average Salary Range
+              </Typography>
+              <Typography>
+                {`Discover the potential earnings for graduates from La Trobe University with our detailed exploration of expected salary ranges across various academic programs. This visualization provides a thorough analysis of salary expectations, giving prospective students valuable insights into the financial returns of their educational investments. By highlighting the average salaries associated with different fields of study, this guide helps students make informed decisions about their future careers and the economic benefits of their chosen programs.`}
+              </Typography>
+            </div>{" "}
+            <VerticalBarChart
+              toolboxTooltip={{
+                saveAsImageWithTitle: { title: "Save" },
+              }}
+              showBarLabel
+              yComplement={(value) => `$ ${value},00`}
+              xType="category"
+              yType="value"
+              color="green"
+              tooltip={{ label: "Programme", result: "Salary range yearly" }}
+              data={[
+                {
+                  label: "Computer Science",
+                  result: "30000",
+                },
+                {
+                  label: "Information Technology",
+                  result: "15000",
+                },
+                {
+                  label: "Cyber Security",
+                  result: "27000",
+                },
+              ]}
+            />
+          </div>
+          <hr />
         </div>
       </Main>
       <Footer />
-    </>
-  );
-}
-
-{
-  /* <SalaryComponent ranking={ranking} /> */
-}
-
-{
-  /* <RankingComponent title={"Course Cost"} ranking={ranking}> */
-}
-
-{
-  /* <Bar data={costData} /> */
-}
-{
-  /* </RankingComponent> */
-}
-// <RankingComponent title={"Student Review"} ranking={ranking}>
-//   {/* <PolarArea data={studentReviewsData} /> */}
-// </RankingComponent>
-// <RankingComponent title={"Employment Outcomes"} ranking={ranking}>
-//   {/* <Doughnut data={employmentOutcomesData} /> */}
-// </RankingComponent>
-// <RankingComponent title={"Course Duration"} ranking={ranking}>
-//   {/* <Line data={courseDurationData} /> */}
-// </RankingComponent>
-
-function SalaryComponent({ ranking }) {
-  return (
-    <div className="bg-white py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 pb-4">
-        <dl className="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
-          {ranking.map((rank) => (
-            <div
-              key={rank.id}
-              className="mx-auto flex max-w-xs flex-col gap-y-4"
-            >
-              <dt className="text-xs leading-7 text-gray-900">
-                {rank?.course.name} estimated salary
-              </dt>
-              <dd className="order-first text-3xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
-                $ {rank?.salaryRange}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-      <hr />
-    </div>
-  );
-}
-
-function RankingComponent({ title, ranking, children }) {
-  return (
-    <>
-      <hr />
-      <h6 className="pl-2 pt-2 border-l-4 border-red-900 font-bold uppercase">
-        {title}
-      </h6>
-      <ul role="list" className="divide-y divide-gray-100 pb-10">
-        {ranking.map((rank) => (
-          <>
-            <li key={rank.name} className="flex justify-between gap-x-6 py-5">
-              <div className="flex min-w-0 gap-x-4">
-                <div className="min-w-0 flex-auto">
-                  <p className="text-sm font-bold leading-6 text-red-900 uppercase">
-                    {rank?.course.name}
-                  </p>
-                  <p className="mt-1 truncate text-xs leading-5 text-red-900">
-                    {rank.name}
-                  </p>
-                </div>
-              </div>
-              {title == "Course Cost" && (
-                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                  <p className="text-sm leading-6 text-gray-900">{rank.name}</p>
-                  ${rank.cost}
-                </div>
-              )}
-              {title == "Student Review" && (
-                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                  <p className="text-sm leading-6 text-gray-900">{rank.name}</p>
-                  {rank.studentReviews}
-                </div>
-              )}
-              {title == "Employment Outcomes" && (
-                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                  <p className="text-sm leading-6 text-gray-900">{rank.name}</p>
-                  {rank.employmentOutcomes}
-                </div>
-              )}
-              {title == "Course Duration" && (
-                <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                  <p className="text-sm leading-6 text-gray-900">{rank.name}</p>
-                  {rank.courseDuration}
-                </div>
-              )}
-            </li>
-          </>
-        ))}
-        {children}
-      </ul>
     </>
   );
 }
