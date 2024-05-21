@@ -4,8 +4,8 @@ import axios from "axios";
 import Header from "../components/Header";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
-import { Button, Select, Typography } from "@material-tailwind/react";
-
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 function useChat() {
   const [input, setInput] = useState("");
@@ -37,14 +37,31 @@ function useChat() {
           model: "gpt-3.5-turbo",
           messages: [...messages, userMessage].map((message) => ({
             role: "system",
-            content: `please eevry content should be related to latrobe university, ${message.text}`,
+            content: `
+            This is a course comparison application, and the major items to compare are:
+
+            Introduction,
+            Overview,
+            Core subjects,
+            SILO (Subject Intended Learning Outcome),
+            SLG (Subject Learning Guide),
+            Pathway,
+            Major structure,
+            Elective subjects are optional.
+
+            If no information is available, please provide a general overview of the courses.
+
+            Please ensure that all content is related to La Trobe University. The website is https://latrobe.edu.au.
+
+            The result should be in markdown format.
+            , ${message.text}`,
           })),
           temperature: 0.7,
         },
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${apiKey}`,
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
           },
         }
       );
@@ -78,30 +95,38 @@ export default function Chat() {
     <>
       <Header />
       <Main>
-         {/* Hero Section */}
-         <div className="bg-red-900 h-[450px] text-center">
-          <div className="px-4 py-2 lg:px-44 lg:py-4">
-            <div className="pt-10 text-white">
-              <h1 className="text-5xl font-extrabold z-10">
-              Navigate Your Academic Path
-              </h1>
-              <h1 className="font-bold z-10 tracking-wider">
-              Interact with Our LLM for Latrobe University Course Comparison
-              </h1>
-              <p className="py-2 z-10">Empower Your Decision-Making Process with Personalized Insights</p>
-            </div>
-          </div>
+        {/* Hero Section */}
+        <div
+          className="h-[450px] text-center"
+          style={{
+            backgroundImage: "url('ai-robot.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          {/* <div className="px-4 py-2 lg:px-44 lg:py-4">
+            
+          </div> */}
         </div>
-
-
 
         <div
           id="chat-container"
-          className="container shadow-lg mt-[-10%] mb-5 rounded-md bg-white mx-auto px-4 py-8 min-h-screen relative max-w-4xl flex flex-col justify-between"
+          className="container shadow-lg mt-[-25%] mb-5 rounded-md bg-white mx-auto px-4 py-8 min-h-screen relative max-w-4xl flex flex-col justify-between"
         >
-          <div className="flex-1 p-4 max-h-screen"
-           style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }} // Added styles for scrollbar
-           
+          <div className="bg-red-900 p-10 text-white rounded-md">
+            <h1 className="text-2xl uppercase font-extrabold z-10">
+              Navigate Your Academic Path
+            </h1>
+            <h1 className="text-xs font-bold z-10 uppercase tracking-wider">
+              Interact with Our LLM for Latrobe University Course Comparison
+            </h1>
+            <p className="text-xs py-2 z-10">
+              Empower Your Decision-Making Process with Personalized Insights
+            </p>
+          </div>
+          <div
+            className="flex-1 p-2 min-h-screen"
+            style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }} // Added styles for scrollbar
           >
             {messages.map((message) => (
               <div
@@ -111,11 +136,16 @@ export default function Chat() {
                 }`}
               >
                 <div
-                  className={`prose p-2 rounded-lg ${
-                    message.isUser ? "bg-blue-400 text-white" : "bg-gray-200"
+                  className={`w-full prose p-4 rounded-lg ${
+                    message.isUser ? "bg-red-900 text-white" : "bg-gray-200"
                   }`}
                 >
-                  {message.text}
+                  <Markdown
+                    remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+                  >
+                    {message.text}
+                  </Markdown>
+                  {/* {message.text} */}
                 </div>
               </div>
             ))}
@@ -131,7 +161,7 @@ export default function Chat() {
             />
             <button
               type="submit"
-              className="px-4 py-2 text-white bg-red-500 border rounded-lg hover:bg-red-600"
+              className="px-4 py-2 text-white bg-red-900 border rounded-lg hover:bg-red-800"
             >
               Send
             </button>

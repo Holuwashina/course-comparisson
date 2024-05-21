@@ -11,7 +11,7 @@ export function CourseCard({ id, name, type, description }) {
   return (
     <Card className="mt-6 w-96 rounded-none">
       <CardBody>
-        <Typography variant="h5" color="blue-gray" className="uppercase font-extrabold tracking-wider line-clamp-1">
+        <Typography variant="h6" color="blue-gray" className="uppercase font-extrabold tracking-wider line-clamp-1">
           {name}
         </Typography>
         <Typography variant="small" color="red" className="mb-2 text-[0.7rem] tracking-wider">
