@@ -29,7 +29,7 @@ export default function Ranking() {
     fetchCourses();
   }, []);
 
-  if (ranking?.length === 0) {
+  if (!ranking  || ranking?.length === 0) {
     return (
       <div className="flex justify-center items-center">
         <Spinner />
