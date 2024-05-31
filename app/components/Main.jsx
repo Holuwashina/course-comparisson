@@ -1,6 +1,4 @@
 "use client";
-import { Navbar, Typography } from "@material-tailwind/react";
-
 
 export default function Main({children}) {
   return (

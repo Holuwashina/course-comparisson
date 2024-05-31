@@ -60,8 +60,6 @@ export default function Ranking() {
   );
   const courseDuration = courseData.map((course) => course.courseDuration);
 
-  console.log(courseNames);
-
   const costData = {
     labels: courseNames,
     datasets: [
@@ -124,7 +122,7 @@ export default function Ranking() {
 
   return (
     <>
-      <Header />
+      <Header courses={ranking.map((rank) => rank.course)} />
       <Main>
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center py-8">
@@ -180,13 +178,13 @@ export default function Ranking() {
               data={[
                 {
                   label: "Computer science",
-                  result: 4,
+                  result: 3,
                   style: { color: "red" },
                   itemId: "Com Sci",
                 },
                 {
                   label: "Cyber Security",
-                  result: 4,
+                  result: 3,
                   style: { color: "yellow" },
                   itemId: "Cyber",
                 },

@@ -6,6 +6,7 @@ import Main from "../components/Main";
 import Footer from "../components/Footer";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Spinner } from "@material-tailwind/react";
 
 function useChat() {
   const [input, setInput] = useState("");
@@ -81,7 +82,21 @@ function useChat() {
 }
 
 export default function Chat() {
+  const [courses, setCourses] = useState([]);
   const { input, setInput, messages, handleSubmit } = useChat();
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get("/api/courses");
+        setCourses(response.data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+
+    fetchCourses();
+  }, []);
 
   useEffect(() => {
     // Scroll to the bottom of the chat when new messages are added
@@ -91,9 +106,17 @@ export default function Chat() {
     }
   }, [messages]);
 
+  if (!courses || courses.length === 0) {
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <>
-      <Header />
+      <Header courses={courses} />
       <Main>
         {/* Hero Section */}
         <div

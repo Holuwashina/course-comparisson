@@ -59,7 +59,7 @@ export default function Home() {
 
   return (
     <main>
-      <Header />
+      <Header courses={courses} />
       <Main>
         {/* Hero Section */}
         <div className="relative h-[450px] flex items-center justify-center">

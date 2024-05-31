@@ -48,8 +48,8 @@ export default function Page({ params }) {
       <Header />
       {/* Hero Section */}
       <div className="grid grid-cols-2">
-        <div className="flex justify-center">
-          <div className="flex flex-col justify-between relative left-32 bg-white rounded-3xl py-10 pr-20 my-10">
+        <div className="flex justify-center lg:px-44">
+          <div className="flex flex-col justify-between relative bg-white rounded-3xl py-10 pr-20 my-10">
             <div>
               <Typography variant="h1" className="font-extrabold uppercase">
                 {course.name.split(" ")[0]}{" "}
@@ -65,7 +65,7 @@ export default function Page({ params }) {
                 {course.type}
               </Typography>
             </div>
-            <div>
+            <div className="py-4">
               <Typography className="uppercase text-xs font-extrabold ml-4">
                 Majors
               </Typography>
